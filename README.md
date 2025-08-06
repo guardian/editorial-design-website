@@ -1,6 +1,6 @@
-# sv
+# Guardian Editorial Design Website
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit website showcasing the Guardian Cub Sans typeface, powered by [`sv`](https://github.com/sveltejs/cli).
 
 ## Creating a project
 
