@@ -1,0 +1,17 @@
+body {
+	background-color: #1a1a1a;
+	margin: 16px;
+	.home-page {
+		h1 {
+			color: white;
+			opacity: 0;
+		}
+		svg {
+			width: 264px;
+			height: 56px;
+		}
+		a {
+			color: white;
+		}
+	}
+}
