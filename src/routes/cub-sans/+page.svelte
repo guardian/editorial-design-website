@@ -18,7 +18,8 @@
 
 	let fontSize = 140;
 	let lineHeight = 140;
-	let text = 'The quick brown fox jumps over the lazy dog';
+	let letterSpacing = 0;
+	let text = 'Power to the people. Vex kings, jump barricades, quiz laws, blaze truth, fix world.';
 
 	// Character arrays for different categories
 	const characterSets = {
@@ -128,22 +129,12 @@
 			modules: [Navigation],
 			slidesPerView: 1,
 			spaceBetween: 30,
+			centeredSlides: true,
+
+			navigation: true,
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev'
-			}
-		});
-		const secondSwiper = new Swiper('.secondSwiper', {
-			modules: [Pagination, Navigation],
-			slidesPerView: 1,
-			spaceBetween: 30,
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev'
-			},
-			pagination: {
-				el: '.swiper-pagination',
-				clickable: true
 			}
 		});
 	});
@@ -155,6 +146,29 @@
 			<span>Guardian Cub Sans</span> A new condensed typeface inspired by the Black Panther Newspaper
 		</h1>
 	</section>
+	<section class="cub-sans-decription">
+		<p>
+			Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
+			PANTHER Cubs - the children born into THE BLACK PANTHER party.
+		</p>
+		<p>
+			THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
+			around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub Sans
+			is designed with a sharp social and historical sensibility, this font channels the boldness
+			and urgency of revolutionary print media in a modern world.
+		</p>
+		<a
+			target="_blank"
+			href="https://www.theguardian.com/us-news/ng-interactive/2025/mar/25/when-the-revolution-doesnt-come-documentary"
+			>Watch the film</a
+		>
+		<a
+			target="_blank"
+			href="https://www.theguardian.com/world/ng-interactive/2025/mar/25/what-happens-when-the-us-declares-war-on-your-parents-the-black-panther-cubs-know"
+			>Read the article</a
+		>
+	</section>
+
 	<section class="cub-sans-swiper">
 		<div class="swiper mySwiper">
 			<div class="swiper-wrapper">
@@ -198,48 +212,79 @@
 			</div>
 		</div>
 	</section>
+
+	<section class="cub-sans-details">
+		<div class="cub-sans-details-item">
+			<span>Hh</span>
+			<label for="Hh">Tall x-height improves legibility at smaller sizes</label>
+		</div>
+		<div class="cub-sans-details-item">
+			<span>BIG</span>
+			<label for="BIG"
+				>Condensed width allows the most impact on both it’s smallest and largest mediums</label
+			>
+		</div>
+		<div class="cub-sans-details-item">
+			<span>ag</span>
+			<label for="ag"
+				>While it is geometric, it's not sterile. Subtle curves and irregularities give it a
+				slightly handmade or analog feel, referencing hand cut type</label
+			>
+		</div>
+	</section>
+
+	<section class="cub-sans-creative">
+		<div>
+			<video src={docTitlesVideo} autoplay muted poster={docPosterImage}>
+				Your browser does not support the video tag.
+			</video>
+			<p>Documentary Titles</p>
+		</div>
+		<div>
+			<video src={docCreditsVideo} autoplay muted poster={docPosterImage}>
+				Your browser does not support the video tag.
+			</video>
+			<p>Documentary Credits</p>
+		</div>
+
+		<div>
+			<video src={docNamesVideo} autoplay muted poster={docPosterImage}>
+				Your browser does not support the video tag.
+			</video>
+			<p>Lower thirds</p>
+		</div>
+		<img src={docPosterImage} alt="" />
+	</section>
 	<section class="cub-sans-explore">
 		<div class="wrapper">
 			<div
 				class="editor"
 				contenteditable="true"
 				bind:innerText={text}
-				style="--font-size: {fontSize}px; --line-height: {lineHeight}px;"
+				style="--font-size: {fontSize}px; --line-height: {lineHeight}px; --letter-spacing: {letterSpacing}px;"
 			></div>
 			<div class="controls">
-				<input id="fontSize" type="range" min="16" max="300" step="1" bind:value={fontSize} />
-				<label for="fontSize">Size: {fontSize}px</label>
-				<!-- <input id="lineHeight" type="range" min="16" max="300" step="1" bind:value={lineHeight} />
-				<label for="lineHeight">Line Height: {lineHeight}px</label> -->
-			</div>
-		</div>
-	</section>
-	<section class="cub-sans-video-section">
-		<div class="swiper secondSwiper">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<video src={docTitlesVideo} autoplay muted poster={docPosterImage}>
-						Your browser does not support the video tag.
-					</video>
+				<div class="controls-item">
+					<input id="fontSize" type="range" min="16" max="300" step="1" bind:value={fontSize} />
+					<label for="fontSize">Size: {fontSize}px</label>
 				</div>
-				<div class="swiper-slide">
-					<video src={docCreditsVideo} autoplay muted poster={docPosterImage}>
-						Your browser does not support the video tag.
-					</video>
+				<div class="controls-item">
+					<input id="lineHeight" type="range" min="16" max="300" step="1" bind:value={lineHeight} />
+					<label for="lineHeight">Line Height: {lineHeight}px</label>
 				</div>
-				<div class="swiper-slide">
-					<video src={docNamesVideo} autoplay muted poster={docPosterImage}>
-						Your browser does not support the video tag.
-					</video>
+				<div class="controls-item">
+					<input
+						id="letterSpacing"
+						type="range"
+						min="-10"
+						max="10"
+						step="0.5"
+						bind:value={letterSpacing}
+					/>
+					<label for="letterSpacing">Letter spacing: {letterSpacing}px</label>
 				</div>
 			</div>
 		</div>
-		<div class="swiper-pagination"></div>
-		<div class="swiper-button-next"></div>
-		<div class="swiper-button-prev"></div>
-	</section>
-	<section class="cub-sans-creative">
-		<img src={docPosterImage} alt="" />
 	</section>
 	<section class="cub-sans-footer">
 		<img src={guardianLogo} alt="Guardian Design logo" />
