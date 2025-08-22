@@ -31,6 +31,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"sass-mq": "^7.0.0",
 		"swiper": "^11.2.10"
 	}
 }
