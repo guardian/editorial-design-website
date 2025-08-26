@@ -16,7 +16,7 @@ const config = {
 			strict: false
 		}),
 		paths: {
-			base: process.env.NODE_ENV === ''
+			base: process.env.NODE_ENV === 'production' ? '' : ''
 		},
 		prerender: {
 			handleHttpError: 'warn'
