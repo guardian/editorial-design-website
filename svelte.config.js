@@ -16,7 +16,7 @@ const config = {
 			strict: false
 		}),
 		paths: {
-			base: process.env.NODE_ENV === 'production' ? '/editorial-design-website' : ''
+			base: process.env.NODE_ENV === ''
 		},
 		prerender: {
 			handleHttpError: 'warn'
