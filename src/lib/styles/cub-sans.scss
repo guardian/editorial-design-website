@@ -2,6 +2,7 @@
 @use './input-slider.scss';
 @import '../styles/mq.scss';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 :root {
 	--swiper-pagination-bullet-inactive-color: #fff;
 	--swiper-theme-color: #3399ff;
@@ -12,8 +13,8 @@ $blue: #3399ff;
 @font-face {
 	font-family: 'Guardian Cubs Sans';
 	src:
-		url('../assets/guardian-cub-sans/GuardianCubsSans-v4.woff2') format('woff2'),
-		url('../assets/guardian-cub-sans/GuardianCubsSans-v4.woff') format('woff');
+		url('../assets/guardian-cub-sans/GuardianCubSans-V55.woff2') format('woff2'),
+		url('../assets/guardian-cub-sans/GuardianCubSans-V55.woff') format('woff');
 	font-weight: 400;
 	font-style: normal;
 }
@@ -24,7 +25,7 @@ body {
 	h1 {
 		font-family: 'Guardian Cub Sans', var(--font-family);
 		font-size: 146px;
-		line-height: 75%;
+		line-height: 100%;
 		font-weight: 400;
 		color: white;
 		margin: 0;
@@ -45,12 +46,15 @@ body {
 }
 
 .cub-sans-decription {
+	padding-top: 40px;
 	p,
 	a {
-		font-size: 40px;
-		line-height: 90%;
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 20px;
+		line-height: 110%;
 		color: white;
-		max-width: 620px;
+		max-width: 400px;
 		letter-spacing: 1px;
 		margin-top: 0;
 		margin-bottom: 16px;
