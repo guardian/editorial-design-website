@@ -90,7 +90,7 @@
 	--btn-secondary-fg: var(--brand-400);
 	--btn-secondary-bd: var(--brand-400);
 
-	--card-hover-bd: var(--brand-800);
+	--card-hover-bd: #ffffff;
 	--link: var(--brand-800);
 
 	--field-bg: var(--elev-2);
@@ -101,7 +101,7 @@
 	--surface: linear-gradient(180deg, #0e1522 0%, #0b101a 100%);
 	--elev-1: #121826;
 	--elev-2: #0e1420;
-	--line: #24304a;
+	--line: #5977ba;
 
 	--text: #f1f4f8;
 	--muted: #a9b3c3;
@@ -293,6 +293,7 @@ main {
 	transform: translateY(-2px);
 	box-shadow: var(--shadow-2);
 	border-color: var(--card-hover-bd);
+	background-color: var(--card-hover-bd);
 }
 .card h3 {
 	margin: 0 0 var(--s-8);
@@ -499,7 +500,7 @@ select:focus {
 	color: var(--snippet-fg);
 	border: 1px dashed #28406a;
 	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
-	white-space: pre;
+	white-space: wrap;
 	overflow: auto;
 }
 .hint {

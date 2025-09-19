@@ -72,15 +72,7 @@
 <main class="wrap">
 	{#if view === 'home'}
 		<section class="view active" aria-labelledby="home-heading">
-			<h1 id="home-heading" class="app-title">
-				Choose a template
-				<span id="mode-badge" class="mode-badge">{modeText}</span>
-			</h1>
-			<p class="hint">
-				Each builder outputs a single
-				<code>&lt;div class="interactive" data-props='…'&gt;</code>
-				string using straight quotes &amp; valid JSON.
-			</p>
+			<h1 id="home-heading" class="app-title">Choose a template</h1>
 			<div class="home-grid">
 				<button class="card" onclick={() => navigate('colour')} onBack={() => navigate('home')}>
 					<span class="pill">template</span>
@@ -115,6 +107,10 @@
 	{/if}
 
 	<footer class="hint">
-		Copy and embed into composer with the 'Interactive Element Builder' atom to create
+		<p>
+			Each builder outputs a single
+			<code>&lt;div class="interactive" data-props='…'&gt;</code>
+			string using straight quotes &amp; valid JSON. Copy and embed into Composer to create.
+		</p>
 	</footer>
 </main>
