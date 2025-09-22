@@ -6,6 +6,7 @@
 	let videoType = $state('header');
 	let videoControls = $state(true);
 	let videoAutoplay = $state(false);
+	let videoLoop = $state(false);
 	let videoMp4 = $state('');
 	let videoWebm = $state('');
 	let videoVtt = $state('');
@@ -68,6 +69,7 @@
 			videoType,
 			sources: Object.keys(videoSources).length ? videoSources : undefined,
 			autoplay: videoAutoplay || undefined,
+			loop: videoLoop || undefined,
 			vtt: videoVtt.trim() || undefined,
 			transcript: videoTranscript.trim() || undefined,
 			attribution: videoAttribution.trim() || undefined
@@ -82,6 +84,7 @@
 		videoType = 'header';
 		videoControls = true;
 		videoAutoplay = false;
+		videoLoop = false;
 		videoMp4 = '';
 		videoWebm = '';
 		videoVtt = '';
@@ -137,6 +140,13 @@
 					<label class="switch" for="video-autoplay">
 						<input id="video-autoplay" type="checkbox" bind:checked={videoAutoplay} />
 						<span>autoplay</span>
+					</label>
+				</div>
+
+				<div class="field">
+					<label class="switch" for="video-loop">
+						<input id="video-loop" type="checkbox" bind:checked={videoLoop} />
+						<span>loop</span>
 					</label>
 				</div>
 			</div>
