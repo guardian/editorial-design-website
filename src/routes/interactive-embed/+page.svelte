@@ -74,22 +74,22 @@
 		<section class="view active" aria-labelledby="home-heading">
 			<h1 id="home-heading" class="app-title">Choose a template</h1>
 			<div class="home-grid">
-				<button class="card" onclick={() => navigate('colour')} onBack={() => navigate('home')}>
+				<button class="card" onclick={() => navigate('colour')}>
 					<span class="pill">template</span>
 					<h3>Colour</h3>
 					<p>Define a colour token or swatch.</p>
 				</button>
-				<button class="card" onclick={() => navigate('video')} onBack={() => navigate('home')}>
+				<button class="card" onclick={() => navigate('video')}>
 					<span class="pill">template</span>
 					<h3>Video</h3>
 					<p>Poster, sources, advanced mobile/desktop.</p>
 				</button>
-				<button class="card" onclick={() => navigate('audio')} onBack={() => navigate('home')}>
+				<button class="card" onclick={() => navigate('audio')}>
 					<span class="pill">template</span>
 					<h3>Audio</h3>
 					<p>MP3/OGG sources, autoplay, loop.</p>
 				</button>
-				<button class="card" onclick={() => navigate('dev')} onBack={() => navigate('home')}>
+				<button class="card" onclick={() => navigate('dev')}>
 					<span class="pill">advanced</span>
 					<h3>&lt;dev&gt;</h3>
 					<p>Free-form JSON (bring your own keys).</p>
