@@ -1,3 +1,5 @@
+@import url("./guardian-fonts.scss");
+
 /* =========================================================
      Guardian Design Tokens
      ========================================================= */
@@ -47,6 +49,7 @@
 
 	/* Type */
 	--ff: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --ff: 'GuardianTextSans';
 	--font-size-base: 17px;
 	--font-size-sm: 14px;
 	--font-size-xs: 12px;
@@ -56,6 +59,7 @@
 	--r-8: 8px;
 	--r-10: 10px;
 	--r-12: 12px;
+  --r-40: 40px;
 	--shadow-1: 0 2px 10px rgba(0, 0, 0, 0.25);
 	--shadow-2: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
@@ -130,6 +134,19 @@
 
 	--field-bg: #0e1420;
 	--field-fg: #f1f4f8;
+}
+
+/* =========================================================
+     Typography
+     ========================================================= */
+
+h1,
+.brand div {
+  font-family: 'GH Guardian Headline';
+}
+
+h2, h3 {
+  font-family: 'Guardian Egyptian Web';
 }
 
 /* =========================================================
@@ -282,6 +299,7 @@ main {
 	border-radius: var(--r-12);
 	padding: var(--s-24);
 	box-shadow: var(--shadow-1);
+  text-align: start;
 	cursor: pointer;
 	position: relative;
 	transition:
@@ -311,7 +329,7 @@ main {
 	font-size: var(--font-size-xs);
 	color: #0b0f14;
 	background: var(--alt-400);
-	padding: 2px 8px;
+	padding: 2px 14px;
 	border-radius: 999px;
 	font-weight: 800;
 	border: 1px solid transparent;
@@ -340,8 +358,8 @@ main {
 .btn {
 	appearance: none;
 	border: 1px solid var(--btn-border);
-	border-radius: var(--r-10);
-	padding: 10px 14px;
+	border-radius: var(--r-40);
+	padding: 11px 20px 12px;
 	cursor: pointer;
 	font-weight: 800;
 	font-size: var(--font-size-sm);
@@ -404,11 +422,12 @@ form {
 	display: flex;
 	flex-direction: column;
 	gap: var(--s-8);
+  align-self: end;
 }
 label {
 	font-size: var(--font-size-sm);
 	color: var(--muted);
-	font-weight: 700;
+	font-weight: 500;
 }
 input[type='text'],
 input[type='url'],
@@ -517,10 +536,11 @@ select:focus {
 	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+  padding-top: 4px;
 }
 .badge {
 	display: inline-block;
-	padding: 2px 8px;
+	padding: 2px 14px;
 	border-radius: 999px;
 	font-size: var(--font-size-xs);
 	font-weight: 800;
