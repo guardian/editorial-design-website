@@ -1,7 +1,7 @@
 <script>
 	import { buildSnippet, copy, stripUndefined } from '../utils';
 
-  const { onBack } = $props();
+	const { onBack } = $props();
 
 	let audioControls = $state(true);
 	let audioAutoplay = $state(false);
@@ -12,10 +12,10 @@
 	let audioTranscript = $state('');
 
 	const audioSources = $derived.by(() => {
-		const arr = [];
-		if (audioMp3.trim()) arr.push({ mp3: audioMp3.trim() });
-		if (audioOgg.trim()) arr.push({ ogg: audioOgg.trim() });
-		return arr;
+		const s = {};
+		if (audioMp3.trim()) s.mp3 = audioMp3.trim();
+		if (audioOgg.trim()) s.ogg = audioOgg.trim();
+		return s;
 	});
 
 	const audioObj = $derived.by(() =>
