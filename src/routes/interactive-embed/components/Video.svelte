@@ -4,10 +4,11 @@
 
 	let videoPoster = $state('');
 	let videoType = $state('header');
-  // 'show-all' | 'hide-sound' | 'hide-all'
-  let videoControlsMode = $state('show-all');
+	// 'show-all' | 'hide-sound' | 'hide-all'
+	let videoControlsMode = $state('show-all');
 	let videoAutoplay = $state(false);
-	let videoLoop = $state(false);
+	// 'infinite' | 'three' | 'none'
+	let videoLoopMode = $state('none');
 	let videoMp4 = $state('');
 	let videoWebm = $state('');
 	let videoVtt = $state('');
@@ -67,11 +68,12 @@
 			element: 'video',
 			poster: videoPoster.trim() || undefined,
 			controls: videoControlsMode !== 'hide-all',
-      hideSoundButton: videoControlsMode === 'hide-sound' ? true : undefined,
+			hideSoundButton: videoControlsMode === 'hide-sound' ? true : undefined,
 			videoType,
 			sources: Object.keys(videoSources).length ? videoSources : undefined,
 			autoplay: videoAutoplay || undefined,
-			loop: videoLoop || undefined,
+			loop: videoLoopMode === 'infinite' ? true : undefined,
+      loopCount: videoLoopMode === 'three' ? 3 : undefined,
 			vtt: videoVtt.trim() || undefined,
 			transcript: videoTranscript.trim() || undefined,
 			attribution: videoAttribution.trim() || undefined
@@ -86,7 +88,7 @@
 		videoType = 'header';
 		videoControlsMode = 'show-all';
 		videoAutoplay = false;
-		videoLoop = false;
+		videoLoopMode = 'none';
 		videoMp4 = '';
 		videoWebm = '';
 		videoVtt = '';
@@ -131,14 +133,14 @@
 
 			<!-- Controls -->
 			<div class="row">
-        <div class="field">
-          <label for="video-controls">Controls</label>
-          <select id="video-controls" bind:value={videoControlsMode}>
-            <option value="show-all">Show all controls</option>
-            <option value="hide-sound">Hide sound button</option>
-            <option value="hide-all">Hide all buttons</option>
-          </select>
-        </div>
+				<div class="field">
+					<label for="video-controls">Controls</label>
+					<select id="video-controls" bind:value={videoControlsMode}>
+						<option value="show-all">Show all controls</option>
+						<option value="hide-sound">Hide sound button</option>
+						<option value="hide-all">Hide all buttons</option>
+					</select>
+				</div>
 
 				<div class="field">
 					<label class="switch" for="video-autoplay">
@@ -148,10 +150,12 @@
 				</div>
 
 				<div class="field">
-					<label class="switch" for="video-loop">
-						<input id="video-loop" type="checkbox" bind:checked={videoLoop} />
-						<span>loop</span>
-					</label>
+					<label for="video-loop">Looping</label>
+					<select id="video-loop" bind:value={videoLoopMode}>
+						<option value="infinite">Loop continuously</option>
+						<option value="three">Loop 3 times</option>
+						<option value="none">Do not loop</option>
+					</select>
 				</div>
 			</div>
 
@@ -280,6 +284,7 @@
 			<textarea class="snippet" readonly bind:value={outVideo}></textarea>
 			<p class="hint" role="status" aria-live="polite">{msgVideo}</p>
 			<p class="hint">
+        The 'header' video type is <strong>not lazy loaded</strong> and will autoplay unless a user has 'prefers-reduced-motion setting'.<br/>The 'inline' and 'immersive' videos are lazy loaded. All videos will show controls if over 5 seconds for accessibility. <br/>
 				If you supply both MP4 and WebM, the MP4 will be treated as a <strong>fallback</strong>.<br
 				/>
 				If you add <strong>mobile/desktop</strong> sources, they will be used <em>instead of</em> the
