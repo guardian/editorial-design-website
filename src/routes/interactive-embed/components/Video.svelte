@@ -39,6 +39,12 @@
 		}
 	});
 
+	$effect(() => {
+		if (videoType === 'header') {
+			videoAutoplay = true;
+		}
+	});
+
 	const videoSources = $derived.by(() => {
 		const s = {};
 		if (videoMp4.trim()) s.mp4 = videoMp4.trim();
@@ -73,7 +79,7 @@
 			sources: Object.keys(videoSources).length ? videoSources : undefined,
 			autoplay: videoAutoplay || undefined,
 			loop: videoLoopMode === 'infinite' ? true : undefined,
-      loopCount: videoLoopMode === 'three' ? 3 : undefined,
+			loopCount: videoLoopMode === 'three' ? 3 : undefined,
 			vtt: videoVtt.trim() || undefined,
 			transcript: videoTranscript.trim() || undefined,
 			attribution: videoAttribution.trim() || undefined
@@ -144,8 +150,15 @@
 
 				<div class="field">
 					<label class="switch" for="video-autoplay">
-						<input id="video-autoplay" type="checkbox" bind:checked={videoAutoplay} />
-						<span>autoplay</span>
+						<input
+							id="video-autoplay"
+							type="checkbox"
+							bind:checked={videoAutoplay}
+							disabled={videoType === 'header'}
+						/>
+						<span>
+							autoplay {videoType === 'header' ? '(forced on for header)' : ''}
+						</span>
 					</label>
 				</div>
 
@@ -284,7 +297,9 @@
 			<textarea class="snippet" readonly bind:value={outVideo}></textarea>
 			<p class="hint" role="status" aria-live="polite">{msgVideo}</p>
 			<p class="hint">
-        The 'header' video type is <strong>not lazy loaded</strong> and will autoplay unless a user has 'prefers-reduced-motion setting'.<br/>The 'inline' and 'immersive' videos are lazy loaded. All videos will show controls if over 5 seconds for accessibility. <br/>
+				The 'header' video type is <strong>not lazy loaded</strong> and will autoplay unless a user
+				has 'prefers-reduced-motion setting'.<br />The 'inline' and 'immersive' videos are lazy
+				loaded. All videos will show controls if over 5 seconds for accessibility. <br />
 				If you supply both MP4 and WebM, the MP4 will be treated as a <strong>fallback</strong>.<br
 				/>
 				If you add <strong>mobile/desktop</strong> sources, they will be used <em>instead of</em> the
