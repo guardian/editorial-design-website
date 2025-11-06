@@ -4,7 +4,8 @@
 
 	let videoPoster = $state('');
 	let videoType = $state('header');
-	let videoControls = $state(true);
+  // 'show-all' | 'hide-sound' | 'hide-all'
+  let videoControlsMode = $state('show-all');
 	let videoAutoplay = $state(false);
 	let videoLoop = $state(false);
 	let videoMp4 = $state('');
@@ -65,7 +66,8 @@
 		stripUndefined({
 			element: 'video',
 			poster: videoPoster.trim() || undefined,
-			controls: Boolean(videoControls),
+			controls: videoControlsMode !== 'hide-all',
+      hideSoundButton: videoControlsMode === 'hide-sound' ? true : undefined,
 			videoType,
 			sources: Object.keys(videoSources).length ? videoSources : undefined,
 			autoplay: videoAutoplay || undefined,
@@ -82,7 +84,7 @@
 	function resetVideo() {
 		videoPoster = '';
 		videoType = 'header';
-		videoControls = true;
+		videoControlsMode = 'show-all';
 		videoAutoplay = false;
 		videoLoop = false;
 		videoMp4 = '';
@@ -129,12 +131,14 @@
 
 			<!-- Controls -->
 			<div class="row">
-				<div class="field">
-					<label class="switch" for="video-controls">
-						<input id="video-controls" type="checkbox" bind:checked={videoControls} />
-						<span>controls</span>
-					</label>
-				</div>
+        <div class="field">
+          <label for="video-controls">Controls</label>
+          <select id="video-controls" bind:value={videoControlsMode}>
+            <option value="show-all">Show all controls</option>
+            <option value="hide-sound">Hide sound button</option>
+            <option value="hide-all">Hide all buttons</option>
+          </select>
+        </div>
 
 				<div class="field">
 					<label class="switch" for="video-autoplay">
