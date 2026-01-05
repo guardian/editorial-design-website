@@ -7,6 +7,7 @@
 	import Audio from './components/Audio.svelte';
 	import Dev from './components/Dev.svelte';
 	import CultureLists from './components/Culture-lists.svelte';
+	import SnapSlides from './components/Snap-slides.svelte';
 
 	// THEME
 	let isDark = $state(true);
@@ -24,7 +25,7 @@
 	});
 
 	// SIMPLE VIEW
-	const views = ['home', 'colour', 'video', 'audio', 'dev', 'culture-lists'];
+	const views = ['home', 'colour', 'video', 'audio', 'dev', 'culture-lists', 'snap-slides'];
 	let view = $state('home');
 	let hydrated = false;
 	function navigate(id) {
@@ -100,6 +101,11 @@
 					<h3>Culture Lists</h3>
 					<p>Manage and display culture-related lists.</p>
 				</button>
+				<button class="card" onclick={() => navigate('snap-slides')}>
+					<span class="pill">template</span>
+					<h3>Snap Slides</h3>
+					<p>Manage and display lists with snap-slides layout.</p>
+				</button>
 			</div>
 		</section>
 	{:else if view === 'colour'}
@@ -112,6 +118,8 @@
 		<Dev onBack={() => navigate('home')} />
 	{:else if view === 'culture-lists'}
 		<CultureLists onBack={() => navigate('home')} />
+	{:else if view === 'snap-slides'}
+		<SnapSlides onBack={() => navigate('home')} />
 	{/if}
 
 	<footer class="hint">
