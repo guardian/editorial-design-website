@@ -1,6 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
-	import { ATOM_CONFIG__ATOMS, getAtomProps, getAtomUrl } from '../atom-config';
 	import { json } from '@sveltejs/kit';
 	import { escapeForSingleQuotedAttr } from '../utils';
 	import { get } from 'svelte/store';
@@ -8,21 +6,30 @@
 	// This component allows to build configuration containers for interactive atoms.
 	const { onBack } = $props();
 
-	const atomTypes = ATOM_CONFIG__ATOMS;
+	let atomProps = $state([
+		{
+			name: 'isEoY',
+			type: 'checkbox',
+			value: false,
+			description: 'Tick box to enable End of Year styling'
+		},
+		{
+			name: 'renderNavBar',
+			type: 'checkbox',
+			value: true,
+			description: 'Tick box to render the navigation bar'
+		}
+	]);
 
 	let isPretty = $state(false);
-	let selectedAtomType = $state('');
-	let selectedAtomUrl = $derived(selectedAtomType ? getAtomUrl(selectedAtomType) : '');
+	let atomName = $state('culture-lists');
+	let atomUrl = $state(
+		'https://content.guardianapis.com/atom/interactive/interactives/2025/08/2025-list-template/default-list'
+	);
 	let copiedMsg = $state('');
 	let errorMsg = $state('');
 	let inputValues = $state([]);
-
-	let selectedAtomProps = $derived.by(() => {
-		return getAtomProps(selectedAtomType);
-	});
-
 	let jsonAttrs = $state('');
-
 	let jsonText = $derived.by(() => {
 		try {
 			// Validate JSON
@@ -36,7 +43,7 @@
 
 	const initInputValues = () => {
 		const arr = [];
-		selectedAtomProps.forEach((prop) => {
+		atomProps.forEach((prop) => {
 			// Initialize with default values
 			if (prop.type === 'checkbox') {
 				arr.push(prop.value || false);
@@ -48,16 +55,16 @@
 	};
 
 	$effect(() => {
-		if (selectedAtomType && selectedAtomProps) {
+		if (atomName && atomProps) {
 			initInputValues();
 		}
 	});
 
 	const setJsonAttrs = () => {
-		if (selectedAtomProps) {
-			const atomProps = $state.snapshot(selectedAtomProps);
+		if (atomProps) {
+			const propsSnap = $state.snapshot(atomProps);
 			const obj = {};
-			atomProps.forEach((prop, index) => {
+			propsSnap.forEach((prop, index) => {
 				obj[prop.name] = inputValues[index];
 			});
 			jsonAttrs = JSON.stringify(obj, null, isPretty ? 2 : 0);
@@ -65,14 +72,14 @@
 	};
 
 	$effect(() => {
-		if (inputValues) {
+		if (inputValues && atomProps) {
 			setJsonAttrs();
 		}
 	});
 
 	function resetDev() {
-		selectedAtomType = '';
 		inputValues = [];
+		initInputValues();
 		jsonAttrs = '';
 		isPretty = false;
 		errorMsg = '';
@@ -83,37 +90,22 @@
 <section class="view active" aria-labelledby="dev-heading">
 	<div class="panel">
 		<div class="title-row">
-			<h2 id="dev-heading">Atom Configurator</h2>
+			<h2 id="dev-heading">Culture Lists</h2>
 			<button class="back" onclick={() => onBack()}>← Back</button>
 		</div>
 
 		<form autocomplete="off">
 			<div class="row">
-				<div class="field">
-					<label for="dev-element">Atom type</label>
-					<select
-						id="dev-element"
-						type="select"
-						placeholder="e.g. 'gallery' or 'quiz'"
-						bind:value={selectedAtomType}
-					>
-						{#each atomTypes as atomType}
-							<option value={atomType.id}>{atomType.name}</option>
-						{/each}
-					</select>
-				</div>
-			</div>
-			<div class="row">
-				{#if selectedAtomType && selectedAtomUrl}
+				{#if atomName && atomUrl}
 					<p class="hint">
-						The atom url for <strong>{selectedAtomType}</strong> is: <em>{selectedAtomUrl}</em>
+						The atom url for <strong>{atomName}</strong> is: <em>{atomUrl}</em>
 					</p>
 				{/if}
 			</div>
 
 			<div class="row">
-				{#if selectedAtomType && selectedAtomProps}
-					{#each selectedAtomProps as prop, index}
+				{#if atomProps}
+					{#each atomProps as prop, index}
 						<div class="field">
 							{#if prop.type === 'checkbox'}
 								<label class="switch" for={prop.name}>
