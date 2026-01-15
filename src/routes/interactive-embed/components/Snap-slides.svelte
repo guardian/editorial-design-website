@@ -3,14 +3,11 @@
 	const { onBack } = $props();
 
 	let theme = $state('feature-light');
-  let hasOpacity = $state(false);
-	let bgOpacity = $derived.by(() => hasOpacity ? "40%" : "60%");
 
 	const snapSlidesObj = $derived.by(() =>
 		stripUndefined({
 			element: 'snap-slides',
 			theme: theme || undefined,
-			bgOpacity: bgOpacity
 		})
 	);
 
@@ -19,7 +16,6 @@
 
 	const resetSnapSlides = () => {
 		theme = 'feature-light';
-		bgOpacity = '60%';
 	};
 </script>
 
@@ -40,13 +36,6 @@
 						<option value="news">News</option>
 					</select>
 				</div>
-
-				<div class="field">
-					<label class="switch" for="bg-opacity">
-						<input id="bg-opacity" type="checkbox" bind:checked={hasOpacity} />
-						<span>Cards have see-through backgrounds</span>
-					</label>
-				</div>
 			</div>
 		</form>
 
@@ -64,6 +53,8 @@
 				Without any settings the atom will default to the Feature Light theme, without the Explainer
 				tag.
 			</div>
+
+      <p class="hint" role="status" aria-live="polite">{msgSnapSlides}</p>
 		</div>
 	</div>
 </section>
