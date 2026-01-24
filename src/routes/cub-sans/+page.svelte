@@ -22,6 +22,33 @@
 		}
 	];
 
+	// Apply responsive defaults for the editor (desktop gets a larger starting size)
+	function applyResponsiveEditorDefaults() {
+		const mq = window.matchMedia('(min-width: 740px)');
+
+		const setFromMatch = (match) => {
+			editors = [{ ...editors[0], fontSize: match.matches ? 250 : 150 }];
+		};
+
+		setFromMatch(mq);
+
+		const handler = (event) => setFromMatch(event);
+
+		if (mq.addEventListener) {
+			mq.addEventListener('change', handler);
+		} else if (mq.addListener) {
+			mq.addListener(handler);
+		}
+
+		return () => {
+			if (mq.removeEventListener) {
+				mq.removeEventListener('change', handler);
+			} else if (mq.removeListener) {
+				mq.removeListener(handler);
+			}
+		};
+	}
+
 	// Carousel state
 	const characterSets = {
 		lowercase: 'abcdefghijklmnopqrstuvwxyz'.split(''),
@@ -45,6 +72,8 @@
 	};
 
 	onMount(() => {
+		const detachResponsiveDefaults = applyResponsiveEditorDefaults();
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
@@ -63,6 +92,11 @@
 		);
 
 		sectionRefs.forEach((el) => el && observer.observe(el));
+
+		return () => {
+			observer.disconnect();
+			detachResponsiveDefaults();
+		};
 	});
 </script>
 
@@ -159,7 +193,7 @@
 							id="fontSize-input"
 							type="range"
 							min="24"
-							max="240"
+							max="300"
 							step="1"
 							bind:value={editors[0].fontSize}
 						/>
