@@ -141,7 +141,7 @@
 	</section>
 
 	<!-- Section 3: Editable -->
-	<section class="snap-section editable" bind:this={sectionRefs[5]}>
+	<section class="snap-section editable" bind:this={sectionRefs[4]}>
 		<div class="wrapper editable-wrapper">
 			<div
 				class="editor"
@@ -196,7 +196,7 @@
 	</section>
 
 	<!-- Section 2: Video (Titles) -->
-	<section class="snap-section video black-bg" bind:this={sectionRefs[4]}>
+	<section class="snap-section video black-bg" bind:this={sectionRefs[5]}>
 		<div class="wrapper">
 			<p class="caption">Documentary Titles</p>
 			<div class="video-wrap">
@@ -216,7 +216,7 @@
 	</section>
 
 	<!-- Section 10: Footer -->
-	<section class="snap-section footer black-bg" bind:this={sectionRefs[9]}>
+	<section class="snap-section footer black-bg" bind:this={sectionRefs[6]}>
 		<div class="wrapper">
 			<img class="brand" src={guardianLogo} alt="Guardian Design" />
 			<p class="copyright">© 2025 Guardian News & Media Limited.</p>
