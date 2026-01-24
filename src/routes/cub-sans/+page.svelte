@@ -26,7 +26,7 @@
 	const characterSets = {
 		lowercase: 'abcdefghijklmnopqrstuvwxyz'.split(''),
 		uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
-		glyphs: '!@#$%^&*()-_=+[]{}|;:",.<>/?0123456789'.split('')
+		glyphs: '0123456789!@#$%^&*-_=+()[]{}|;:",./?'.split('')
 	};
 
 	let selectedCharSet = 'lowercase';
