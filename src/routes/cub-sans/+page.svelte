@@ -71,7 +71,7 @@
 	<section class="snap-section intro black-bg" bind:this={sectionRefs[0]}>
 		<div class="wrapper copy-wrapper intro-wrapper">
 			<h1>THE<br />BLACK<br />PANTHER<br />Cubs</h1>
-			<p>A new display type from the Guardian</p>
+			<p>A new display typeface from the Guardian</p>
 		</div>
 	</section>
 	<!-- Section 5: Copy -->
@@ -105,7 +105,7 @@
 					class:active={selectedCharSet === 'lowercase'}
 					on:click={() => changeCharSet('lowercase')}
 				>
-					lowercase
+					Lowercase
 				</button>
 				<button
 					class:active={selectedCharSet === 'uppercase'}
@@ -137,16 +137,6 @@
 				Sans is designed with a sharp social and historical sensibility, this font channels the
 				boldness and urgency of revolutionary print media in a modern world.
 			</p>
-		</div>
-	</section>
-
-	<!-- Section 2: Video (Titles) -->
-	<section class="snap-section video" bind:this={sectionRefs[4]}>
-		<div class="wrapper">
-			<div class="video-wrap">
-				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
-				<p class="caption">Documentary Titles</p>
-			</div>
 		</div>
 	</section>
 
@@ -205,59 +195,28 @@
 		</div>
 	</section>
 
-	<!-- Section 4: Video (Credits)
-	<section class="snap-section video" bind:this={sectionRefs[4]}>
-		<div class="video-wrap">
-			<video src={docCreditsVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
-			<p class="caption">Documentary Credits</p>
-		</div>
-	</section> -->
-
-	<!-- Section 6: Copy -->
-	<section class="snap-section copy" bind:this={sectionRefs[6]}>
+	<!-- Section 2: Video (Titles) -->
+	<section class="snap-section video black-bg" bind:this={sectionRefs[4]}>
 		<div class="wrapper">
-			<h2>Condensed, loud, legible</h2>
-			<p>
-				Built for tight columns and bold headlines, Cub Sans balances economy and presence. Its tall
-				x-height keeps text readable across sizes.
-			</p>
-		</div>
-	</section>
-
-	<!-- Section 7: Video (Lower thirds) -->
-	<section class="snap-section video" bind:this={sectionRefs[7]}>
-		<div class="wrapper">
+			<p class="caption">Documentary Titles</p>
 			<div class="video-wrap">
-				<video src={docNamesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
-				<p class="caption">Lower Thirds</p>
+				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
 			</div>
 		</div>
 	</section>
 
-	<!-- Section 8: Copy -->
-	<!-- <section class="snap-section copy" bind:this={sectionRefs[8]}>
+	<!-- Section 7: Video (Lower thirds) -->
+	<section class="snap-section video black-bg" bind:this={sectionRefs[7]}>
 		<div class="wrapper">
-			<h2>Editorial rhythm</h2>
-			<p>
-				From display to utility, the face carries a handmade edge — referencing revolutionary print
-				culture while serving contemporary storytelling.
-			</p>
+			<p class="caption">Lower Thirds</p>
+			<div class="video-wrap">
+				<video src={docNamesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
+			</div>
 		</div>
-	</section> -->
-
-	<!-- Section 9: Copy -->
-	<!-- <section class="snap-section copy" bind:this={sectionRefs[8]}>
-		<div class="wrapper">
-			<h2>Handmade edge</h2>
-			<p>
-				A geometric base with human irregularities—echoing protest prints while serving modern
-				layouts.
-			</p>
-		</div>
-	</section> -->
+	</section>
 
 	<!-- Section 10: Footer -->
-	<section class="snap-section footer" bind:this={sectionRefs[9]}>
+	<section class="snap-section footer black-bg" bind:this={sectionRefs[9]}>
 		<div class="wrapper">
 			<img class="brand" src={guardianLogo} alt="Guardian Design" />
 			<p class="copyright">© 2025 Guardian News & Media Limited.</p>
