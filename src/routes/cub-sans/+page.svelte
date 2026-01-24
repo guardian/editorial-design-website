@@ -1,13 +1,5 @@
 <script>
 	import '../../lib/styles/cub-sans.scss';
-	import { Swiper } from 'swiper';
-	import { Pagination, Navigation } from 'swiper/modules';
-	import 'swiper/css';
-	import 'swiper/css/pagination';
-	import 'swiper/css/navigation';
-	import { fade } from 'svelte/transition';
-
-	// Import assets
 	import guardianLogo from '../../lib/assets/guardian-design-logo.svg';
 	import docTitlesVideo from '../../lib/assets/guardian-cub-sans/doc-titles.mp4';
 	import docCreditsVideo from '../../lib/assets/guardian-cub-sans/doc-credits.mp4';
@@ -16,196 +8,114 @@
 
 	import { onMount } from 'svelte';
 
-	let fontSize = 140;
-	let lineHeight = 140;
-	let letterSpacing = 0;
-	let text = 'Power to the people. Vex kings, jump barricades, quiz laws, blaze truth, fix world.';
+	let scrollContainer;
+	let sectionRefs = Array(10).fill(null);
+	let activeIndex = 0;
 
-	// Character arrays for different categories
+	// Editable section state (single section)
+	let editors = [
+		{
+			text: 'BLACK POWER. BLACK PRIDE.',
+			fontSize: 150,
+			lineHeight: 80,
+			letterSpacing: 0
+		}
+	];
+
+	// Carousel state
 	const characterSets = {
-		lowercase: [
-			'a',
-			'b',
-			'c',
-			'd',
-			'e',
-			'f',
-			'g',
-			'h',
-			'i',
-			'j',
-			'k',
-			'l',
-			'm',
-			'n',
-			'o',
-			'p',
-			'q',
-			'r',
-			's',
-			't',
-			'u',
-			'v',
-			'w',
-			'x',
-			'y',
-			'z'
-		],
-		uppercase: [
-			'A',
-			'B',
-			'C',
-			'D',
-			'E',
-			'F',
-			'G',
-			'H',
-			'I',
-			'J',
-			'K',
-			'L',
-			'M',
-			'N',
-			'O',
-			'P',
-			'Q',
-			'R',
-			'S',
-			'T',
-			'U',
-			'V',
-			'W',
-			'X',
-			'Y',
-			'Z'
-		],
-		numbers: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-		glyphs: [
-			'!',
-			'@',
-			'#',
-			'$',
-			'%',
-			'^',
-			'&',
-			'*',
-			'(',
-			')',
-			'-',
-			'_',
-			'=',
-			'+',
-			'[',
-			']',
-			'{',
-			'}',
-			'|',
-			'\\',
-			';',
-			':',
-			'"',
-			"'",
-			',',
-			'.',
-			'<',
-			'>',
-			'/',
-			'?'
-		]
+		lowercase: 'abcdefghijklmnopqrstuvwxyz'.split(''),
+		uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+		glyphs: '!@#$%^&*()-_=+[]{}|;:",.<>/?0123456789'.split('')
 	};
 
-	// Current selected character set
-	let selectedSet = 'lowercase';
-	let currentCharacters = characterSets[selectedSet];
+	let selectedCharSet = 'lowercase';
+	let currentChars = characterSets[selectedCharSet];
 
-	// Function to change character set
-	function changeCharacterSet(setName) {
-		selectedSet = setName;
-		currentCharacters = characterSets[setName];
+	function changeCharSet(setName) {
+		selectedCharSet = setName;
+		currentChars = characterSets[setName];
 	}
 
-	onMount(() => {
-		const swiper = new Swiper('.mySwiper', {
-			modules: [Navigation],
-			slidesPerView: 1,
-			spaceBetween: 30,
-			centeredSlides: true,
+	const scrollToSection = (idx) => {
+		const el = sectionRefs[idx];
+		if (el && scrollContainer) {
+			scrollContainer.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+		}
+	};
 
-			navigation: true,
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev'
+	onMount(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						const idx = sectionRefs.indexOf(entry.target);
+						if (idx !== -1) {
+							activeIndex = idx;
+						}
+					}
+				}
+			},
+			{
+				root: scrollContainer,
+				threshold: 0.6
 			}
-		});
+		);
+
+		sectionRefs.forEach((el) => el && observer.observe(el));
 	});
 </script>
 
-<main class="cub-sans">
-	<section class="cub-sans-header">
-		<h1>
-			<span>Guardian Cub Sans</span> A new condensed typeface inspired by the Black Panther Newspaper
-		</h1>
+<main class="snap-container" bind:this={scrollContainer}>
+	<!-- Section 1: Intro -->
+	<section class="snap-section intro black-bg" bind:this={sectionRefs[0]}>
+		<div class="wrapper copy-wrapper intro-wrapper">
+			<h1>THE<br />BLACK<br />PANTHER<br />Cubs</h1>
+			<p>A new display typeface from the Guardian</p>
+		</div>
 	</section>
-	<section class="cub-sans-decription">
-		<p>
-			Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
-			PANTHER Cubs - the children born into THE BLACK PANTHER party.
-		</p>
-		<p>
-			THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
-			around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub Sans
-			is designed with a sharp social and historical sensibility, this font channels the boldness
-			and urgency of revolutionary print media in a modern world.
-		</p>
-		<a
-			target="_blank"
-			href="https://www.theguardian.com/us-news/ng-interactive/2025/mar/25/when-the-revolution-doesnt-come-documentary"
-			>Watch the film</a
-		>
-		<a
-			target="_blank"
-			href="https://www.theguardian.com/world/ng-interactive/2025/mar/25/what-happens-when-the-us-declares-war-on-your-parents-the-black-panther-cubs-know"
-			>Read the article</a
-		>
+	<!-- Section 5: Copy -->
+	<section class="snap-section copy black-bg" bind:this={sectionRefs[1]}>
+		<div class="wrapper copy-wrapper">
+			<h2>The inspiration</h2>
+			<p>
+				Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
+				PANTHER Cubs - the children born into THE BLACK PANTHER party.
+			</p>
+			<p>
+				THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
+				around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub
+				Sans is designed with a sharp social and historical sensibility, this font channels the
+				boldness and urgency of revolutionary print media in a modern world.
+			</p>
+		</div>
 	</section>
 
-	<section class="cub-sans-swiper">
-		<div class="swiper mySwiper">
-			<div class="swiper-wrapper">
-				{#each currentCharacters as character, index (character)}
-					<div class="swiper-slide" in:fade={{ delay: index * 50, duration: 300 }}>
-						{character}
-					</div>
+	<!-- CAROUSEL SECTION -->
+	<section class="snap-section carousel" bind:this={sectionRefs[2]}>
+		<div class="wrapper carousel-wrapper">
+			<div class="carousel-scroll-container">
+				{#each currentChars as char}
+					<div class="char-display">{char}</div>
 				{/each}
 			</div>
-			<div class="swiper-button-next"></div>
-			<div class="swiper-button-prev"></div>
-			<div class="button-wrapper">
+
+			<div class="carousel-controls">
 				<button
-					class="lowercase"
-					class:active={selectedSet === 'lowercase'}
-					on:click={() => changeCharacterSet('lowercase')}
+					class:active={selectedCharSet === 'lowercase'}
+					on:click={() => changeCharSet('lowercase')}
 				>
 					Lowercase
 				</button>
 				<button
-					class="uppercase"
-					class:active={selectedSet === 'uppercase'}
-					on:click={() => changeCharacterSet('uppercase')}
+					class:active={selectedCharSet === 'uppercase'}
+					on:click={() => changeCharSet('uppercase')}
 				>
-					Uppercase
+					UPPERCASE
 				</button>
 				<button
-					class="numbers"
-					class:active={selectedSet === 'numbers'}
-					on:click={() => changeCharacterSet('numbers')}
-				>
-					Numbers
-				</button>
-				<button
-					class="glyphs"
-					class:active={selectedSet === 'glyphs'}
-					on:click={() => changeCharacterSet('glyphs')}
+					class:active={selectedCharSet === 'glyphs'}
+					on:click={() => changeCharSet('glyphs')}
 				>
 					Glyphs
 				</button>
@@ -213,81 +123,114 @@
 		</div>
 	</section>
 
-	<section class="cub-sans-details">
-		<div class="cub-sans-details-item">
-			<span>Hh</span>
-			<label for="Hh">Tall x-height improves legibility at smaller sizes</label>
-		</div>
-		<div class="cub-sans-details-item">
-			<span>BIG</span>
-			<label for="BIG"
-				>Condensed width allows the most impact on both it’s smallest and largest mediums</label
-			>
-		</div>
-		<div class="cub-sans-details-item">
-			<span>ag</span>
-			<label for="ag"
-				>While it is geometric, it's not sterile. Subtle curves and irregularities give it a
-				slightly handmade or analog feel, referencing hand cut type</label
-			>
+	<!-- Section 5: Copy -->
+	<section class="snap-section copy" bind:this={sectionRefs[3]}>
+		<div class="wrapper copy-wrapper">
+			<h2>The process</h2>
+			<p>
+				Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
+				PANTHER Cubs - the children born into THE BLACK PANTHER party.
+			</p>
+			<p>
+				THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
+				around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub
+				Sans is designed with a sharp social and historical sensibility, this font channels the
+				boldness and urgency of revolutionary print media in a modern world.
+			</p>
 		</div>
 	</section>
 
-	<section class="cub-sans-creative">
-		<div>
-			<video src={docTitlesVideo} autoplay muted poster={docPosterImage}>
-				Your browser does not support the video tag.
-			</video>
-			<p>Documentary Titles</p>
-		</div>
-		<div>
-			<video src={docCreditsVideo} autoplay muted poster={docPosterImage}>
-				Your browser does not support the video tag.
-			</video>
-			<p>Documentary Credits</p>
-		</div>
-
-		<div>
-			<video src={docNamesVideo} autoplay muted poster={docPosterImage}>
-				Your browser does not support the video tag.
-			</video>
-			<p>Lower thirds</p>
-		</div>
-		<img src={docPosterImage} alt="" />
-	</section>
-	<section class="cub-sans-explore">
-		<div class="wrapper">
+	<!-- Section 3: Editable -->
+	<section class="snap-section editable" bind:this={sectionRefs[4]}>
+		<div class="wrapper editable-wrapper">
 			<div
 				class="editor"
 				contenteditable="true"
-				bind:innerText={text}
-				style="--font-size: {fontSize}px; --line-height: {lineHeight}px; --letter-spacing: {letterSpacing}px;"
+				bind:innerText={editors[0].text}
+				style="--font-size: {editors[0].fontSize}px; --line-height: {editors[0]
+					.lineHeight}%; --letter-spacing: {editors[0].letterSpacing}px;"
 			></div>
-			<div class="controls">
-				<div class="controls-item">
-					<input id="fontSize" type="range" min="16" max="300" step="1" bind:value={fontSize} />
-					<label for="fontSize">Size: {fontSize}px</label>
+
+			<div class="controls-bottom">
+				<div class="control-item">
+					<label for="fontSize-input">SIZE</label>
+					<div class="slider-container">
+						<input
+							id="fontSize-input"
+							type="range"
+							min="24"
+							max="240"
+							step="1"
+							bind:value={editors[0].fontSize}
+						/>
+					</div>
 				</div>
-				<div class="controls-item">
-					<input id="lineHeight" type="range" min="16" max="300" step="1" bind:value={lineHeight} />
-					<label for="lineHeight">Line Height: {lineHeight}px</label>
+				<div class="control-item">
+					<label for="lineHeight-input">LEADING</label>
+					<div class="slider-container">
+						<input
+							id="lineHeight-input"
+							type="range"
+							min="24"
+							max="300"
+							step="1"
+							bind:value={editors[0].lineHeight}
+						/>
+					</div>
 				</div>
-				<div class="controls-item">
-					<input
-						id="letterSpacing"
-						type="range"
-						min="-10"
-						max="10"
-						step="0.5"
-						bind:value={letterSpacing}
-					/>
-					<label for="letterSpacing">Letter spacing: {letterSpacing}px</label>
+				<div class="control-item">
+					<label for="letterSpacing-input">SPACING</label>
+					<div class="slider-container">
+						<input
+							id="letterSpacing-input"
+							type="range"
+							min="-10"
+							max="20"
+							step="0.5"
+							bind:value={editors[0].letterSpacing}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="cub-sans-footer">
-		<img src={guardianLogo} alt="Guardian Design logo" />
-		<p>© 2025 Guardian News & Media Limited or its affiliated companies. All rights reserved.</p>
+
+	<!-- Section 2: Video (Titles) -->
+	<section class="snap-section video black-bg" bind:this={sectionRefs[5]}>
+		<div class="wrapper">
+			<p class="caption">Documentary Titles</p>
+			<div class="video-wrap">
+				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
+			</div>
+		</div>
 	</section>
+
+	<!-- Section 7: Video (Lower thirds) -->
+	<section class="snap-section video black-bg" bind:this={sectionRefs[7]}>
+		<div class="wrapper">
+			<p class="caption">Lower Thirds</p>
+			<div class="video-wrap">
+				<video src={docNamesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 10: Footer -->
+	<section class="snap-section footer black-bg" bind:this={sectionRefs[6]}>
+		<div class="wrapper">
+			<img class="brand" src={guardianLogo} alt="Guardian Design" />
+			<p class="copyright">© 2025 Guardian News & Media Limited.</p>
+		</div>
+	</section>
+
+	<!-- Right-side pagination dots -->
+	<nav class="pagination">
+		{#each Array(10) as _, i}
+			<button
+				class:active={activeIndex === i}
+				aria-label={`Go to section ${i + 1}`}
+				on:click={() => scrollToSection(i)}
+			></button>
+		{/each}
+	</nav>
 </main>
