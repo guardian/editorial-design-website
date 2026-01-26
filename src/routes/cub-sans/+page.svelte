@@ -122,7 +122,7 @@
 	<section class="snap-section intro black-bg" bind:this={sectionRefs[0]}>
 		<div class="wrapper copy-wrapper intro-wrapper">
 			<h1>THE BLACK PANTHER Cubs</h1>
-			<p>A new display typeface from the Guardian</p>
+			<p>The Guardian Cub Sans, a new display typeface from the Guardian</p>
 		</div>
 	</section>
 	<!-- Section 5: Copy -->
@@ -130,14 +130,12 @@
 		<div class="wrapper copy-wrapper">
 			<h2>The inspiration</h2>
 			<p>
-				Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
-				PANTHER Cubs - the children born into THE BLACK PANTHER party.
-			</p>
-			<p>
-				THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
-				around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub
-				Sans is designed with a sharp social and historical sensibility, this font channels the
-				boldness and urgency of revolutionary print media in a modern world.
+				This typeface is about inheritance, not preservation. It draws from the Black Panther
+				newspaper — a publication made under pressure, urgent and incomplete by necessity. Rather
+				than seeing these as a finished system, we treated them as something to be continued. The
+				move to expand the missing lowercase family became a guiding metaphor: parent to child,
+				Panther to Cub, learning language through what already exists. The aim was not to revive the
+				past, but to carry its voice forward.
 			</p>
 		</div>
 	</section>
@@ -150,6 +148,13 @@
 					<div class="char-display">{char}</div>
 				{/each}
 			</div>
+			<!-- 
+			<div class="lines">
+				<hr class="cap-height" />
+				<hr class="x-height" />
+				<hr class="baseline" />
+				<hr class="descender" />
+			</div> -->
 
 			<div class="carousel-controls">
 				<button
@@ -179,14 +184,13 @@
 		<div class="wrapper copy-wrapper">
 			<h2>The process</h2>
 			<p>
-				Guardian Cub Sans was born out of an editorial project exploring the lives of THE BLACK
-				PANTHER Cubs - the children born into THE BLACK PANTHER party.
-			</p>
-			<p>
-				THE BLACK PANTHER newspaper, designed by Emory Douglas uses type to emphasise the urgency
-				around the movement. 50 years later the Cubs speak of a continued fight for justice. Cub
-				Sans is designed with a sharp social and historical sensibility, this font channels the
-				boldness and urgency of revolutionary print media in a modern world.
+				The original material was fragmentary, likely assembled from letterpress blocks rather than
+				a complete typeface. Where letters didn’t exist, they were redrawn by hand to extend the
+				set, guided by the logic and irregularities of the originals. The type was then digitised
+				and adjusted for contemporary use — scale, spacing, proportions, and contrast refined to
+				ensure clarity and usability. These changes weren’t about perfection, but continuity:
+				picking up where the newspaper left off and shaping a typeface that could speak to a modern
+				audience.
 			</p>
 		</div>
 	</section>

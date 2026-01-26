@@ -35,8 +35,6 @@ body {
 		height: 100dvh;
 		scroll-snap-align: start;
 		.wrapper {
-			// width: calc(100% - 60px);
-			// height: calc(100% - 20px);
 			height: calc(100vh - 20px);
 			height: calc(100svh - 20px);
 			height: calc(100dvh - 20px);
@@ -82,7 +80,7 @@ body {
 				justify-content: space-between;
 				p {
 					position: relative;
-					padding-right: 90px;
+					padding-right: 110px;
 					&:before {
 						content: '';
 						position: absolute;
@@ -127,10 +125,12 @@ body {
 				font-size: 27vw;
 				letter-spacing: -1px;
 				margin: 0;
-				margin-bottom: 120px;
+				// margin-bottom: 120px;
+				margin-bottom: auto;
 				padding-top: 5px;
 				@include mq(desktop) {
 					line-height: 80%;
+					font-size: 28vw;
 				}
 			}
 			h1,
@@ -149,6 +149,7 @@ body {
 				margin-bottom: 16px;
 				@include mq(desktop) {
 					font-size: 20px;
+					line-height: 130%;
 				}
 			}
 			a {
@@ -276,6 +277,7 @@ body {
 		flex-direction: column;
 		gap: 5px;
 		position: relative;
+		margin-bottom: 16px;
 		&:before {
 			content: '';
 			position: absolute;
@@ -424,42 +426,45 @@ body {
 	}
 }
 
-// .cub-sans-swiper {
-// 	margin: 0 -8px;
-// 	.swiper-slide {
-// 		width: min-content !important;
-// 		margin-right: 4px !important;
-// 	}
-// 	button {
-// 		padding: 10px 35px 8px 20px;
-// 		border: 2px solid #606060;
-// 		color: white;
-// 		border-radius: 50px;
-// 		font-family: 'Guardian Cubs Sans', sans-serif;
-// 		font-size: 40px;
-// 		cursor: pointer;
-// 		background-color: #1a1a1a;
-
-// 		&:hover,
-// 		&.active {
-// 			border-color: $blue;
-// 			color: $blue;
-// 		}
-
-// 		margin-left: -33px;
-// 		&:first-of-type {
-// 			margin-left: 0;
-// 		}
-// 		&:last-of-type {
-// 			padding: 10px 16px 8px 16px;
-// 		}
-// 	}
-// }
-
 .carousel {
 	position: relative;
 	overflow: hidden;
 	background: #000;
+	// .lines {
+	// 	position: absolute;
+	// 	left: 0;
+	// 	width: 100%;
+	// 	hr {
+	// 		margin: 0;
+	// 		position: absolute;
+	// 		width: 100%;
+	// 		border: 1px solid #606060;
+	// 		&.cap-height {
+	// 			top: 15.3vh;
+	// 			@include mq(desktop) {
+	// 				top: 14.2vh;
+	// 			}
+	// 		}
+	// 		&.x-height {
+	// 			top: 22.1vh;
+	// 			@include mq(desktop) {
+	// 				top: 20.88vh;
+	// 			}
+	// 		}
+	// 		&.baseline {
+	// 			top: 72.3vh;
+	// 			@include mq(desktop) {
+	// 				top: 71.2vh;
+	// 			}
+	// 		}
+	// 		&.descender {
+	// 			top: 82.95vh;
+	// 			@include mq(desktop) {
+	// 				top: 81.8vh;
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 .carousel-wrapper {
@@ -473,6 +478,7 @@ body {
 }
 
 .carousel-scroll-container {
+	z-index: 5;
 	flex: 1;
 	width: 100%;
 	overflow-x: auto;
@@ -523,7 +529,7 @@ body {
 	align-items: center;
 	flex-wrap: wrap;
 	width: calc(100vw - 20px);
-	padding-bottom: 10px;
+	padding-bottom: 16px;
 }
 
 .carousel-controls button {
