@@ -2,11 +2,15 @@
 	import '../../lib/styles/cub-sans.scss';
 	import guardianLogo from '../../lib/assets/guardian-design-logo.svg';
 	import docTitlesVideo from '../../lib/assets/guardian-cub-sans/doc-titles.mp4';
+	import docTitlesPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
 	import docCreditsVideo from '../../lib/assets/guardian-cub-sans/doc-credits.mp4';
+	import docCreditsPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
 	import docNamesVideo from '../../lib/assets/guardian-cub-sans/doc-names.mp4';
-	import docPosterImage from '../../lib/assets/guardian-cub-sans/doc-poster.jpg';
+	import docNamesPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
+	import desktopDocPosterImage from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
+	import mobileDocPosterImage from '../../lib/assets/guardian-cub-sans/Poster-mock-up-9-16.jpg';
 
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	let scrollContainer;
 	let sectionRefs = Array(8).fill(null);
@@ -16,6 +20,7 @@
 	let fontSizeMin = 24;
 	let fontSizeMax = 300;
 	let fontSizeUnit = 'px';
+	let carouselContainer;
 
 	// Editable section state (single section)
 	let editors = [
@@ -74,10 +79,60 @@
 
 	let selectedCharSet = 'lowercase';
 	let currentChars = characterSets[selectedCharSet];
+	const CAROUSEL_STEP = 3;
 
-	function changeCharSet(setName) {
+	let charRefs = [];
+	let currentCharIndex = 0;
+
+	function syncCharRefs() {
+		charRefs = carouselContainer
+			? Array.from(carouselContainer.querySelectorAll('.char-display'))
+			: [];
+	}
+
+	async function changeCharSet(setName) {
 		selectedCharSet = setName;
 		currentChars = characterSets[setName];
+		await tick();
+		syncCharRefs();
+		resetCarousel();
+	}
+
+	function resetCarousel() {
+		currentCharIndex = 0;
+		if (carouselContainer) {
+			carouselContainer.scrollTo({ left: 0, behavior: 'auto' });
+		}
+	}
+
+	function scrollToIndex(index) {
+		if (!carouselContainer || !charRefs.length) return;
+		const targetIndex = Math.min(Math.max(0, index), charRefs.length - 1);
+		const target = charRefs[targetIndex];
+		if (!target) return;
+		currentCharIndex = targetIndex;
+		carouselContainer.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+	}
+
+	function scrollByChars(delta) {
+		scrollToIndex(currentCharIndex + delta);
+	}
+
+	function handleCarouselScroll() {
+		if (!carouselContainer || !charRefs.length) return;
+		const { scrollLeft } = carouselContainer;
+		let closestIndex = 0;
+		let closestDistance = Number.POSITIVE_INFINITY;
+		for (let i = 0; i < charRefs.length; i += 1) {
+			const ref = charRefs[i];
+			if (!ref) continue;
+			const distance = Math.abs(ref.offsetLeft - scrollLeft);
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				closestIndex = i;
+			}
+		}
+		currentCharIndex = closestIndex;
 	}
 
 	const scrollToSection = (idx) => {
@@ -89,6 +144,7 @@
 
 	onMount(() => {
 		const detachResponsiveDefaults = applyResponsiveEditorDefaults();
+		tick().then(syncCharRefs);
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -122,7 +178,7 @@
 	<section class="snap-section intro black-bg" bind:this={sectionRefs[0]}>
 		<div class="wrapper copy-wrapper intro-wrapper">
 			<h1>THE BLACK PANTHER Cubs</h1>
-			<p>The Guardian Cub Sans, a new display typeface from the Guardian</p>
+			<p>The Guardian Cub Sans<br />A new display typeface from the Guardian</p>
 		</div>
 	</section>
 	<!-- Section 5: Copy -->
@@ -143,18 +199,22 @@
 	<!-- CAROUSEL SECTION -->
 	<section class="snap-section carousel black-bg" bind:this={sectionRefs[2]}>
 		<div class="wrapper carousel-wrapper">
-			<div class="carousel-scroll-container">
-				{#each currentChars as char}
-					<div class="char-display">{char}</div>
+			<div
+				class="carousel-scroll-container"
+				bind:this={carouselContainer}
+				on:scroll={handleCarouselScroll}
+			>
+				{#each currentChars as char, i}
+					<div class="char-display" bind:this={charRefs[i]}>{char}</div>
 				{/each}
+
+				<!-- <div class="lines">
+					<hr class="cap-height" />
+					<hr class="x-height" />
+					<hr class="baseline" />
+					<hr class="descender" />
+				</div> -->
 			</div>
-			<!-- 
-			<div class="lines">
-				<hr class="cap-height" />
-				<hr class="x-height" />
-				<hr class="baseline" />
-				<hr class="descender" />
-			</div> -->
 
 			<div class="carousel-controls">
 				<button
@@ -175,6 +235,53 @@
 				>
 					Glyphs
 				</button>
+				<div class="carousel-nav">
+					<button
+						class="carousel-arrow left"
+						type="button"
+						on:click={() => scrollByChars(-CAROUSEL_STEP)}
+						aria-label="Scroll left"
+					>
+						<span aria-hidden="true"
+							><svg
+								width="27"
+								height="24"
+								viewBox="0 0 27 24"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<rect
+									width="27"
+									height="4.56757"
+									transform="matrix(-1 0 0 1 27 9.5)"
+									fill="white"
+								/>
+								<path d="M15 0L0 9.50003V14.0676L15 4.56757V0Z" fill="white" />
+								<path d="M15 23.5676L0 14.0676V9.50002L15 19.0001V23.5676Z" fill="white" />
+							</svg>
+						</span>
+					</button>
+					<button
+						class="carousel-arrow right"
+						type="button"
+						on:click={() => scrollByChars(CAROUSEL_STEP)}
+						aria-label="Scroll right"
+					>
+						<span aria-hidden="true"
+							><svg
+								width="27"
+								height="24"
+								viewBox="0 0 27 24"
+								fill="none"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<rect y="9.5" width="27" height="4.56757" fill="white" />
+								<path d="M12 0L27 9.50003V14.0676L12 4.56757V0Z" fill="white" />
+								<path d="M12 23.5676L27 14.0676V9.50002L12 19.0001V23.5676Z" fill="white" />
+							</svg>
+						</span>
+					</button>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -185,12 +292,12 @@
 			<h2>The process</h2>
 			<p>
 				The original material was fragmentary, likely assembled from letterpress blocks rather than
-				a complete typeface. Where letters didn’t exist, they were redrawn by hand to extend the
-				set, guided by the logic and irregularities of the originals. The type was then digitised
-				and adjusted for contemporary use — scale, spacing, proportions, and contrast refined to
-				ensure clarity and usability. These changes weren’t about perfection, but continuity:
-				picking up where the newspaper left off and shaping a typeface that could speak to a modern
-				audience.
+				a complete typeface. Where letters didn't exist, they were redrawn by hand by designer Harry
+				Fischer to extend the set, guided by the logic and irregularities of the originals. The type
+				was then digitised and adjusted for contemporary use — scale, spacing, proportions, and
+				contrast refined to ensure clarity and usability. These changes weren’t about perfection,
+				but continuity: picking up where the newspaper left off and shaping a typeface that could
+				speak to a modern audience.
 			</p>
 		</div>
 	</section>
@@ -257,7 +364,8 @@
 		<div class="wrapper">
 			<p class="caption">Documentary Titles</p>
 			<div class="video-wrap">
-				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
+				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docTitlesPoster}
+				></video>
 			</div>
 		</div>
 	</section>
@@ -267,12 +375,39 @@
 		<div class="wrapper">
 			<p class="caption">Lower Thirds</p>
 			<div class="video-wrap">
-				<video src={docNamesVideo} autoplay muted loop playsinline poster={docPosterImage}></video>
+				<video src={docNamesVideo} autoplay muted loop playsinline poster={docNamesPoster}></video>
+			</div>
+		</div>
+	</section>
+	<!-- Section 7: Video (Lower thirds) -->
+	<section class="snap-section video black-bg" bind:this={sectionRefs[7]}>
+		<div class="wrapper">
+			<p class="caption">Credits</p>
+			<div class="video-wrap">
+				<video src={docCreditsVideo} autoplay muted loop playsinline poster={docCreditsPoster}
+				></video>
 			</div>
 		</div>
 	</section>
 
-	<section class="snap-section links black-bg" bind:this={sectionRefs[7]}>
+	<!-- Section 7: Video (Lower thirds) -->
+	<section class="snap-section full-screen-image black-bg" bind:this={sectionRefs[8]}>
+		<div class="wrapper">
+			<p class="caption">Film poster</p>
+			<div class="image-wrap">
+				<picture>
+					<source srcset={desktopDocPosterImage} type="image/jpeg" media="(min-width: 980px)" />
+					<source srcset={mobileDocPosterImage} type="image/jpeg" media="(max-width: 979px)" />
+					<img
+						src={desktopDocPosterImage}
+						alt="When the Revolution Doesn't Come: The Black Panther Cubs poster in situ"
+					/>
+				</picture>
+			</div>
+		</div>
+	</section>
+
+	<section class="snap-section links black-bg" bind:this={sectionRefs[9]}>
 		<div class="wrapper">
 			<a
 				href="https://www.theguardian.com/us-news/ng-interactive/2025/mar/25/when-the-revolution-doesnt-come-documentary"
