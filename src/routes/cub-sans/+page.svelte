@@ -244,7 +244,7 @@
 	<!-- Section 1: Intro -->
 	<section class="snap-section intro black-bg" bind:this={sectionRefs[0]}>
 		<div class="wrapper copy-wrapper intro-wrapper">
-			<h1>THE BLACK PANTHER Cubs</h1>
+			<h1>THE BLACK PANTHER <span>Cubs</span></h1>
 			<p>The Guardian Cub Sans:<br />A new display typeface from the Guardian</p>
 		</div>
 	</section>
