@@ -42,8 +42,8 @@ body {
 			padding: 10px 10px;
 			display: flex;
 			flex-direction: column;
-			overflow: hidden;
 			@include mq(desktop) {
+				overflow: hidden;
 				padding: 10px 20px;
 			}
 			&.copy-wrapper {
@@ -52,6 +52,7 @@ body {
 				position: relative;
 				p {
 					margin-bottom: 0;
+					max-width: 99%;
 				}
 				&:before {
 					content: '';
