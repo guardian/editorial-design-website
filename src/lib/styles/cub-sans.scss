@@ -42,6 +42,7 @@ body {
 			padding: 10px 10px;
 			display: flex;
 			flex-direction: column;
+			overflow: hidden;
 			@include mq(desktop) {
 				padding: 10px 20px;
 			}
@@ -49,6 +50,9 @@ body {
 				height: calc(100% - 40px);
 				padding: 20px 10px 10px 10px;
 				position: relative;
+				p {
+					margin-bottom: 0;
+				}
 				&:before {
 					content: '';
 					position: absolute;
@@ -60,6 +64,7 @@ body {
 					@include mq(desktop) {
 						left: 20px;
 						width: calc(100% - 40px);
+						top: 20px;
 					}
 				}
 				@include mq(tablet) {
@@ -68,10 +73,11 @@ body {
 					}
 				}
 				@include mq(desktop) {
-					padding: 20px 20px 10px 20px;
+					padding: 30px 20px 10px 20px;
 					width: calc(100% - 62px);
+					height: calc(100% - 50px);
 					p {
-						max-width: 600px;
+						max-width: 610px;
 					}
 				}
 			}
@@ -80,7 +86,8 @@ body {
 				justify-content: space-between;
 				p {
 					position: relative;
-					padding-right: 110px;
+					padding-right: 37vw;
+					padding-bottom: 5px;
 					&:before {
 						content: '';
 						position: absolute;
@@ -92,6 +99,8 @@ body {
 					}
 					@include mq(desktop) {
 						max-width: unset !important;
+						padding-right: unset;
+						font-size: 24px;
 					}
 				}
 			}
@@ -102,6 +111,7 @@ body {
 				font-size: 45vw;
 				line-height: 75%;
 				letter-spacing: -1px;
+				letter-spacing: -0.005em;
 				font-weight: 400;
 				margin: 0;
 				padding-top: 8px;
@@ -112,7 +122,7 @@ body {
 				@include mq(desktop) {
 					max-width: unset;
 					font-size: 30vw;
-					padding-top: 12px;
+					padding-top: 14px;
 				}
 				span {
 					color: $blue;
@@ -124,6 +134,7 @@ body {
 				// font-size: 100px;
 				font-size: 27vw;
 				letter-spacing: -1px;
+				letter-spacing: -0.005em;
 				margin: 0;
 				// margin-bottom: 120px;
 				margin-bottom: auto;
@@ -144,12 +155,11 @@ body {
 				font-weight: 300;
 				font-size: 17px;
 				line-height: 120%;
-				letter-spacing: 1px;
 				margin-top: 0;
-				margin-bottom: 16px;
 				@include mq(desktop) {
 					font-size: 20px;
 					line-height: 130%;
+					margin-bottom: 10px;
 				}
 			}
 			a {
@@ -231,8 +241,28 @@ body {
 				background: #000;
 				@include mq(desktop) {
 					width: auto;
-					height: 90vh;
+					height: 100vh;
 				}
+			}
+		}
+	}
+
+	.full-screen-image {
+		position: relative;
+		.image-wrap {
+			z-index: 1;
+			margin-left: -10px;
+			margin-top: -10px;
+			@include mq(desktop) {
+				margin-top: 0;
+				margin-left: -20px;
+			}
+			img {
+				width: 100vw;
+				height: 100vh;
+				height: 100svh;
+				height: 100dvh;
+				object-fit: cover;
 			}
 		}
 	}
@@ -242,6 +272,7 @@ body {
 		position: absolute;
 		top: 12px;
 		color: white;
+		z-index: 3;
 	}
 
 	/* Editable Section */
@@ -270,6 +301,12 @@ body {
 		padding-right: 2rem;
 		font-weight: 400;
 		position: relative;
+		margin-top: -10px;
+		padding-top: 10px;
+		@include mq(desktop) {
+			margin-top: -20px;
+			padding-top: 20px;
+		}
 	}
 
 	.controls-bottom {
@@ -475,6 +512,7 @@ body {
 	align-items: stretch;
 	justify-content: space-between;
 	gap: 0;
+	position: relative;
 }
 
 .carousel-scroll-container {
@@ -491,16 +529,18 @@ body {
 	padding-left: 10px;
 	padding-right: 20vw;
 	gap: 0;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	margin-left: -10px;
+
+	@include mq(desktop) {
+		margin-left: -20px;
+		padding-left: 20px;
+	}
 }
 
 .carousel-scroll-container::-webkit-scrollbar {
 	display: none;
-}
-
-.carousel-scroll-container {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
-	margin-left: -10px;
 }
 
 .char-display {
@@ -530,14 +570,18 @@ body {
 	flex-wrap: wrap;
 	width: calc(100vw - 20px);
 	padding-bottom: 16px;
+	@include mq(desktop) {
+		width: calc(100vw - 40px);
+	}
 }
 
-.carousel-controls button {
+.carousel-controls button:not(.carousel-arrow) {
 	font-family: 'Guardian Cubs Sans', sans-serif;
 	font-size: 35px;
 	letter-spacing: 1px;
 	font-weight: 400;
 	padding: 4px 15px 4px 50px;
+	padding: 4px 22px 4px 50px;
 	border: 1px solid #606060;
 	color: white;
 	border-radius: 50px;
@@ -550,13 +594,15 @@ body {
 		font-size: 30px;
 	}
 
-	&:nth-child(2) {
+	&:nth-child(2):not(.carousel-arrow) {
 		z-index: 2;
 		margin-right: -40px;
+		margin-right: -35px;
 	}
 
-	&:first-of-type {
+	&:first-of-type:not(.carousel-arrow) {
 		margin-right: -40px;
+		margin-right: -35px;
 		padding-left: 20px;
 		z-index: 3;
 	}
@@ -567,47 +613,51 @@ body {
 	}
 }
 
-.cub-sans-explore {
-	color: black;
-	.wrapper {
-		position: relative;
-		.editor {
-			font-family: 'Guardian Cubs Sans', sans-serif;
-			font-size: var(--font-size);
-			line-height: var(--line-height);
-			letter-spacing: var(--letter-spacing);
-			height: 80vh;
-			overflow: auto;
-			outline: none;
-			white-space: pre-wrap;
-			padding-top: 50px;
-			margin-bottom: 100px;
-			@include mq($until: 375px) {
-				width: 86vw;
+.carousel-nav {
+	display: none;
+	inset: 0;
+	align-items: center;
+	justify-content: space-between;
+	pointer-events: none;
+	z-index: 5;
+
+	@include mq(desktop) {
+		margin-left: auto;
+		display: flex;
+	}
+
+	.carousel-arrow {
+		pointer-events: auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		border: 1px solid #606060;
+		background: rgba(0, 0, 0, 0.75);
+		color: white;
+		font-size: 20px;
+		cursor: pointer;
+		transition:
+			transform 150ms ease,
+			border-color 150ms ease,
+			color 150ms ease;
+		span {
+			display: contents;
+		}
+		svg rect,
+		svg path {
+			transition: fill 0.3s ease;
+		}
+		&:hover {
+			svg rect,
+			svg path {
+				fill: $blue;
 			}
 		}
-		.controls {
-			background-color: #1a1a1a;
-			position: absolute;
-			bottom: 0;
-			right: 0;
-			width: 100%;
-			min-height: 50px;
-
-			.controls-item {
-				display: flex;
-				margin-bottom: 10px;
-				flex-direction: row-reverse;
-				label {
-					white-space: nowrap;
-				}
-			}
-			input {
-				width: 100%;
-				@include mq(tablet) {
-					width: 400px;
-				}
-			}
+		&.right {
+			margin-left: 10px;
 		}
 	}
 }
