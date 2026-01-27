@@ -464,6 +464,45 @@ body {
 	}
 }
 
+.loading-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #000;
+	opacity: 1;
+	visibility: visible;
+	z-index: 3000;
+	transition:
+		opacity 0.35s ease,
+		visibility 0.35s ease;
+}
+
+.loading-overlay.loaded {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.spinner {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	border: 3px solid #444;
+	border-top-color: #fff;
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .carousel {
 	position: relative;
 	overflow: hidden;

@@ -2,11 +2,11 @@
 	import '../../lib/styles/cub-sans.scss';
 	import guardianLogo from '../../lib/assets/guardian-design-logo.svg';
 	import docTitlesVideo from '../../lib/assets/guardian-cub-sans/doc-titles.mp4';
-	import docTitlesPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
+	import docTitlesPoster from '../../lib/assets/guardian-cub-sans/doc-titles-poster.jpg';
 	import docCreditsVideo from '../../lib/assets/guardian-cub-sans/doc-credits.mp4';
-	import docCreditsPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
+	import docCreditsPoster from '../../lib/assets/guardian-cub-sans/doc-credits-poster.jpg';
 	import docNamesVideo from '../../lib/assets/guardian-cub-sans/doc-names.mp4';
-	import docNamesPoster from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
+	import docNamesPoster from '../../lib/assets/guardian-cub-sans/doc-names-poster.jpg';
 	import desktopDocPosterImage from '../../lib/assets/guardian-cub-sans/Poster-mock-up-16-9-LOW.jpg';
 	import mobileDocPosterImage from '../../lib/assets/guardian-cub-sans/Poster-mock-up-9-16.jpg';
 
@@ -21,6 +21,47 @@
 	let fontSizeMax = 300;
 	let fontSizeUnit = 'px';
 	let carouselContainer;
+	let showLoader = true;
+
+	function lazyVideo(node) {
+		const src = node.getAttribute('data-src');
+		if (!src) return;
+
+		const load = () => {
+			node.src = src;
+			node.removeAttribute('data-src');
+			node.load();
+			const playPromise = node.play?.();
+			if (playPromise && typeof playPromise.catch === 'function') {
+				playPromise.catch(() => {});
+			}
+		};
+
+		let observer;
+		if (typeof IntersectionObserver !== 'undefined') {
+			observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) {
+							load();
+							observer.disconnect();
+							break;
+						}
+					}
+				},
+				{ root: scrollContainer || null, threshold: 0.2 }
+			);
+			observer.observe(node);
+		} else {
+			load();
+		}
+
+		return {
+			destroy() {
+				observer?.disconnect();
+			}
+		};
+	}
 
 	// Editable section state (single section)
 	let editors = [
@@ -90,6 +131,21 @@
 			: [];
 	}
 
+	async function waitForFonts() {
+		if (typeof document === 'undefined' || !document.fonts) {
+			showLoader = false;
+			return;
+		}
+
+		try {
+			await Promise.race([document.fonts.load('1em "Guardian Cubs Sans"'), document.fonts.ready]);
+		} catch (err) {
+			// Ignore font load errors; let the timeout hide the loader.
+		} finally {
+			showLoader = false;
+		}
+	}
+
 	async function changeCharSet(setName) {
 		selectedCharSet = setName;
 		currentChars = characterSets[setName];
@@ -146,6 +202,12 @@
 		const detachResponsiveDefaults = applyResponsiveEditorDefaults();
 		tick().then(syncCharRefs);
 
+		const loaderTimeout = setTimeout(() => {
+			showLoader = false;
+		}, 6000);
+
+		waitForFonts().finally(() => clearTimeout(loaderTimeout));
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
@@ -169,9 +231,14 @@
 		return () => {
 			observer.disconnect();
 			detachResponsiveDefaults();
+			clearTimeout(loaderTimeout);
 		};
 	});
 </script>
+
+<div class="loading-overlay" class:loaded={!showLoader} aria-hidden={!showLoader}>
+	<div class="spinner" role="status" aria-label="Loading font"></div>
+</div>
 
 <main class="snap-container" bind:this={scrollContainer}>
 	<!-- Section 1: Intro -->
@@ -364,7 +431,15 @@
 		<div class="wrapper">
 			<p class="caption">Documentary Titles</p>
 			<div class="video-wrap">
-				<video src={docTitlesVideo} autoplay muted loop playsinline poster={docTitlesPoster}
+				<video
+					data-src={docTitlesVideo}
+					use:lazyVideo
+					autoplay
+					muted
+					loop
+					playsinline
+					preload="none"
+					poster={docTitlesPoster}
 				></video>
 			</div>
 		</div>
@@ -375,7 +450,16 @@
 		<div class="wrapper">
 			<p class="caption">Lower Thirds</p>
 			<div class="video-wrap">
-				<video src={docNamesVideo} autoplay muted loop playsinline poster={docNamesPoster}></video>
+				<video
+					data-src={docNamesVideo}
+					use:lazyVideo
+					autoplay
+					muted
+					loop
+					playsinline
+					preload="none"
+					poster={docNamesPoster}
+				></video>
 			</div>
 		</div>
 	</section>
@@ -384,7 +468,15 @@
 		<div class="wrapper">
 			<p class="caption">Credits</p>
 			<div class="video-wrap">
-				<video src={docCreditsVideo} autoplay muted loop playsinline poster={docCreditsPoster}
+				<video
+					data-src={docCreditsVideo}
+					use:lazyVideo
+					autoplay
+					muted
+					loop
+					playsinline
+					preload="none"
+					poster={docCreditsPoster}
 				></video>
 			</div>
 		</div>
@@ -401,6 +493,7 @@
 					<img
 						src={desktopDocPosterImage}
 						alt="When the Revolution Doesn't Come: The Black Panther Cubs poster in situ"
+						loading="lazy"
 					/>
 				</picture>
 			</div>
