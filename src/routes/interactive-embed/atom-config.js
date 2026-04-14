@@ -12,6 +12,12 @@ const ATOM_CONFIG__PROPS = {
 			description: 'Tick box to enable End of Year styling'
 		},
 		{
+			name: 'isBestPaperbacks',
+			type: 'checkbox',
+			value: false,
+			description: 'Tick box to enable Best Paperbacks styling'
+		},
+		{
 			name: 'renderNavBar',
 			type: 'checkbox',
 			value: true,
