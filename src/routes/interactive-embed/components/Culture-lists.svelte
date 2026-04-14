@@ -1,7 +1,7 @@
 <script>
 	import { json } from '@sveltejs/kit';
-	import { escapeForSingleQuotedAttr } from '../utils';
 	import { get } from 'svelte/store';
+	import { escapeForSingleQuotedAttr } from '../utils';
 
 	// This component allows to build configuration containers for interactive atoms.
 	const { onBack } = $props();
@@ -12,6 +12,12 @@
 			type: 'checkbox',
 			value: false,
 			description: 'Tick box to enable End of Year styling'
+		},
+		{
+			name: 'isBestPaperbacks',
+			type: 'checkbox',
+			value: false,
+			description: 'Tick box to enable Best Paperbacks styling'
 		},
 		{
 			name: 'renderNavBar',
