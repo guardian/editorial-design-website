@@ -24,6 +24,12 @@
 			type: 'checkbox',
 			value: true,
 			description: 'Tick box to render the navigation bar'
+		},
+		{
+			name: 'animationsOn',
+			type: 'checkbox',
+			value: true,
+			description: 'Tick box to enable animations (works well only with short sections)'
 		}
 	]);
 
