@@ -8,6 +8,7 @@
 	import Dev from './components/Dev.svelte';
 	import CultureLists from './components/Culture-lists.svelte';
 	import SnapSlides from './components/Snap-slides.svelte';
+	import RichRead from './components/Rich-read.svelte';
 
 	// THEME
 	let isDark = $state(true);
@@ -25,7 +26,7 @@
 	});
 
 	// SIMPLE VIEW
-	const views = ['home', 'colour', 'video', 'audio', 'dev', 'culture-lists', 'snap-slides'];
+	const views = ['home', 'colour', 'video', 'audio', 'dev', 'culture-lists', 'snap-slides', 'rich-read'];
 	let view = $state('home');
 	let hydrated = false;
 	function navigate(id) {
@@ -106,6 +107,11 @@
 					<h3>Snap Slides</h3>
 					<p>Manage and display lists with snap-slides layout.</p>
 				</button>
+				<button class="card" onclick={() => navigate('rich-read')}>
+					<span class="pill">template</span>
+					<h3>Rich Read</h3>
+					<p>Configure a rich chapter read with video media.</p>
+				</button>
 			</div>
 		</section>
 	{:else if view === 'colour'}
@@ -120,6 +126,8 @@
 		<CultureLists onBack={() => navigate('home')} />
 	{:else if view === 'snap-slides'}
 		<SnapSlides onBack={() => navigate('home')} />
+	{:else if view === 'rich-read'}
+		<RichRead onBack={() => navigate('home')} />
 	{/if}
 
 	<footer class="hint">
