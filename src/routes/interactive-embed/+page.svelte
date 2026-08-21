@@ -8,6 +8,7 @@
 	import Dev from './components/Dev.svelte';
 	import CultureLists from './components/Culture-lists.svelte';
 	import SnapSlides from './components/Snap-slides.svelte';
+	import PortraitAtom from './components/Portrait-atom.svelte';
 
 	// THEME
 	let isDark = $state(true);
@@ -25,7 +26,16 @@
 	});
 
 	// SIMPLE VIEW
-	const views = ['home', 'colour', 'video', 'audio', 'dev', 'culture-lists', 'snap-slides'];
+	const views = [
+		'home',
+		'colour',
+		'video',
+		'audio',
+		'dev',
+		'culture-lists',
+		'snap-slides',
+		'portrait-atom'
+	];
 	let view = $state('home');
 	let hydrated = false;
 	function navigate(id) {
@@ -106,6 +116,11 @@
 					<h3>Snap Slides</h3>
 					<p>Manage and display lists with snap-slides layout.</p>
 				</button>
+				<button class="card" onclick={() => navigate('portrait-atom')}>
+					<span class="pill">template</span>
+					<h3>Portrait Atom</h3>
+					<p>Generate a portrait-atom embed with a predefined layout.</p>
+				</button>
 			</div>
 		</section>
 	{:else if view === 'colour'}
@@ -120,6 +135,8 @@
 		<CultureLists onBack={() => navigate('home')} />
 	{:else if view === 'snap-slides'}
 		<SnapSlides onBack={() => navigate('home')} />
+	{:else if view === 'portrait-atom'}
+		<PortraitAtom onBack={() => navigate('home')} />
 	{/if}
 
 	<footer class="hint">
