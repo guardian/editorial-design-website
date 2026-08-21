@@ -34,15 +34,15 @@
 				<div class="field">
 					<label for="portrait-atom-layout">Layout</label>
 					<select id="portrait-atom-layout" bind:value={layout}>
-						<option value="portrait-layout">portrait-layout</option>
-						<option value="portrait-layout-feature">portrait-layout-feature</option>
-						<option value="portrait-layout-feature-dark">portrait-layout-feature-dark</option>
+						<option value="portrait-layout">Default portrait layout</option>
+						<option value="portrait-layout-feature">Feature portrait layout</option>
+						<option value="portrait-layout-feature-dark">Feature dark portrait layout</option>
 						<option value="portrait-layout-feature-dark-no-dropcap">
-							portrait-layout-feature-dark-no-dropcap
+							Feature dark portrait layout without drop cap
 						</option>
-						<option value="portrait-layout-feature-pride">portrait-layout-feature-pride</option>
-						<option value="portrait-layout-opinion">portrait-layout-opinion</option>
-						<option value="portrait-layout-obituary">portrait-layout-obituary</option>
+						<option value="portrait-layout-feature-pride">Feature pride portrait layout</option>
+						<option value="portrait-layout-opinion">Opinion portrait layout</option>
+						<option value="portrait-layout-obituary">Obituary portrait layout</option>
 					</select>
 				</div>
 			</div>
